@@ -1,0 +1,31 @@
+services:
+  db:
+    image: ankane/pgvector:latest
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db_init.sh:/docker-entrypoint-initdb.d/init-database.sh
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USERNAME}"]
+      interval: 10s
+      retries: 5
+
+  fastapi_app:
+    image: fastapi_with_rag-web
+    container_name: fastapi_app
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USERNAME}:${POSTGRES_PASSWORD}@db:5432/${DATABASE_NAME}
+    ports:
+      - "8000:8000"
+
+volumes:
+  postgres_data:
+

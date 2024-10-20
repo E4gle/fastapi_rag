@@ -1,0 +1,13 @@
+SQLAlchemy~=2.0.35
+openai~=1.51.2
+fastapi~=0.115.0
+pydantic~=2.9.2
+pypdf2~=3.0.1
+pytesseract~=0.3.13
+pillow~=10.4.0
+PyMuPDF~=1.21.1
+uvicorn
+sqlalchemy-utils
+python-dotenv
+pgvector
+psycopg2-binary
