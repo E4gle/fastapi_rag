@@ -117,7 +117,7 @@ async def ask_question(request: AskModel, db: Session = Depends(get_db)):
 
         # Make the OpenAI API call with the updated context
         response = openai.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o",
             messages=[
                 {"role": "system", "content": system_message},
                 {"role": "user", "content": request.question},
